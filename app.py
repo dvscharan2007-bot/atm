@@ -19,7 +19,7 @@ from flask import (Flask, abort, flash, g, redirect, render_template, request,
 from werkzeug.security import check_password_hash, generate_password_hash
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE, "atm.db")
+DB_PATH = os.path.join("/tmp" if os.name != "nt" else BASE, "atm.db")
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
 PORT = int(os.environ.get("PORT", "5000"))
 CURRENCY = "₹"
