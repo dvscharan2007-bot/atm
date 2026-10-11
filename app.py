@@ -19,7 +19,7 @@ from flask import (Flask, abort, flash, g, redirect, render_template, request,
 from werkzeug.security import check_password_hash, generate_password_hash
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join("/tmp" if os.name != "nt" else BASE, "atm.db")
+DB_PATH = /tmp/atm.db"
 ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
 PORT = int(os.environ.get("PORT", "5000"))
 CURRENCY = "₹"
@@ -52,6 +52,19 @@ CREATE TABLE IF NOT EXISTS transactions(
 
 
 def init_db():
+    print("Database path:", DB_PATH)
+    print(
+        "Directory writable:",
+        os.access(os.path.dirname(DB_PATH), os.W_OK)
+    )
+    print("Database exists:", os.path.exists(DB_PATH))
+
+    if os.path.exists(DB_PATH):
+        print(
+            "Database writable:",
+            os.access(DB_PATH, os.W_OK)
+        )
+
     con = sqlite3.connect(DB_PATH)
     con.executescript(SCHEMA)
     con.commit()
