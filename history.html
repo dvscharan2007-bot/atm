@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Transaction history - Northgate ATM{% endblock %}
+{% block content %}
+<section class="panel wide">
+  <h2>Transaction history</h2>
+  {% if rows %}
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th class="num">Amount</th>
+            <th class="num">Balance after</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td>{{ row.created }}</td>
+              <td>{{ row.kind }}</td>
+              <td class="num {% if row.kind in ['DEPOSIT', 'TRANSFER_IN'] %}in{% else %}out{% endif %}">
+                {% if row.kind in ['DEPOSIT', 'TRANSFER_IN'] %}+{% else %}-{% endif %}{{ row.amount|money }}
+              </td>
+              <td class="num">{{ row.balance_after|money }}</td>
+              <td>{{ row.note or '-' }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p class="hint">No transactions yet.</p>
+  {% endif %}
+</section>
+{% endblock %}

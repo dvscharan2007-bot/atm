@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Admin - Northgate ATM{% endblock %}
+{% block content %}
+{% if not is_admin %}
+<section class="screen narrow">
+  <p class="glow">Restricted area</p>
+  <h1>Admin access</h1>
+  <form method="post" action="{{ url_for('admin') }}" class="panel">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Password
+      <input name="password" type="password" autocomplete="current-password" required>
+    </label>
+    <button class="btn">Enter</button>
+  </form>
+</section>
+{% else %}
+<section class="screen balance">
+  <p class="glow">Bank overview</p>
+  <h1>Northgate ATM control</h1>
+  <dl>
+    <div><dt>Accounts</dt><dd>{{ stats.n }}</dd></div>
+    <div><dt>Total balance</dt><dd>{{ stats.total|money }}</dd></div>
+    <div><dt>Blocked cards</dt><dd>{{ stats.blocked }}</dd></div>
+  </dl>
+  <form method="post" action="{{ url_for('admin_logout') }}">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <button class="btn small alt">Log out</button>
+  </form>
+</section>
+
+<section class="panel wide">
+  <h2>Account list</h2>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Card</th>
+          <th class="num">Balance</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for acct in accounts %}
+          <tr>
+            <td>{{ acct.id }}</td>
+            <td>{{ acct.name }}</td>
+            <td>{{ acct.card|card }}</td>
+            <td class="num">{{ acct.balance|money }}</td>
+            <td>{{ 'Blocked' if acct.frozen else 'Active' }}</td>
+            <td>
+              <form method="post" action="{{ url_for('admin_toggle', account_id=acct.id) }}">
+                <input type="hidden" name="csrf" value="{{ csrf }}">
+                <button class="btn small {% if acct.frozen %}alt{% endif %}">{{ 'Unblock' if acct.frozen else 'Block' }}</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel wide">
+  <h2>Recent system activity</h2>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>When</th>
+          <th>Account</th>
+          <th>Type</th>
+          <th class="num">Amount</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in recent %}
+          <tr>
+            <td>{{ row.created }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.kind }}</td>
+            <td class="num {% if row.kind in ['DEPOSIT', 'TRANSFER_IN'] %}in{% else %}out{% endif %}">
+              {% if row.kind in ['DEPOSIT', 'TRANSFER_IN'] %}+{% else %}-{% endif %}{{ row.amount|money }}
+            </td>
+            <td>{{ row.note or '-' }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

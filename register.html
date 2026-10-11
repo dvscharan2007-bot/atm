@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Open an account - Northgate ATM{% endblock %}
+{% block content %}
+<section class="screen narrow">
+  <p class="glow">New customer</p>
+  <h1>Open an account</h1>
+  <form method="post" action="{{ url_for('register') }}" class="panel">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Full name
+      <input name="name" maxlength="60" required>
+    </label>
+    <label>Choose a 4-digit PIN
+      <input name="pin" type="password" inputmode="numeric" maxlength="4" pattern="\d{4}" class="pin" autocomplete="new-password" required>
+    </label>
+    <label>Confirm PIN
+      <input name="confirm" type="password" inputmode="numeric" maxlength="4" pattern="\d{4}" class="pin" autocomplete="new-password" required>
+    </label>
+    <label>Opening deposit
+      <input name="opening" inputmode="decimal" placeholder="100.00" required>
+    </label>
+    <button class="btn">Create account</button>
+  </form>
+  <p class="hint">Already registered? <a href="{{ url_for('login') }}">Log in</a>.</p>
+</section>
+{% endblock %}

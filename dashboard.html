@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - Northgate ATM{% endblock %}
+{% block content %}
+<section class="screen balance">
+  <p class="glow">Available balance</p>
+  <p class="amount">{{ acct.balance|money }}</p>
+  <dl>
+    <div><dt>Account holder</dt><dd>{{ acct.name }}</dd></div>
+    <div><dt>Card number</dt><dd>{{ acct.card|card }}</dd></div>
+    <div><dt>Withdrawal left today</dt><dd>{{ left|money }}</dd></div>
+  </dl>
+</section>
+
+<section class="actions">
+  <form method="post" action="{{ url_for('deposit') }}" class="panel">
+    <h2>Deposit</h2>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Amount <input name="amount" inputmode="decimal" placeholder="50.00" required></label>
+    <button class="btn">Deposit cash</button>
+  </form>
+
+  <form method="post" action="{{ url_for('withdraw') }}" class="panel">
+    <h2>Withdraw</h2>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Amount <input name="amount" inputmode="decimal" placeholder="20.00" required></label>
+    <button class="btn">Withdraw cash</button>
+  </form>
+
+  <form method="post" action="{{ url_for('transfer') }}" class="panel">
+    <h2>Transfer</h2>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Send to card number <input name="to_card" inputmode="numeric" placeholder="1234 5678 9012" required></label>
+    <label>Amount <input name="amount" inputmode="decimal" placeholder="10.00" required></label>
+    <button class="btn">Send money</button>
+  </form>
+
+  <form method="post" action="{{ url_for('change_pin') }}" class="panel">
+    <h2>Change PIN</h2>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Current PIN <input name="old" type="password" inputmode="numeric" maxlength="4" pattern="\d{4}" class="pin" required></label>
+    <label>New PIN <input name="new" type="password" inputmode="numeric" maxlength="4" pattern="\d{4}" class="pin" required></label>
+    <button class="btn alt">Save new PIN</button>
+  </form>
+</section>
+
+<section class="panel wide">
+  <h2>Latest activity</h2>
+  {% with rows=recent %}{% include "_tx_table.html" %}{% endwith %}
+  <p class="hint"><a href="{{ url_for('history') }}">See full history</a></p>
+</section>
+{% endblock %}

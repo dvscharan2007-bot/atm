@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Log in - Northgate ATM{% endblock %}
+{% block content %}
+<section class="screen narrow">
+  <p class="glow">Welcome back</p>
+  <h1>Log in to your account</h1>
+  <form method="post" action="{{ url_for('login') }}" class="panel">
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <label>Card number
+      <input name="card" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012" required>
+    </label>
+    <label>PIN
+      <input name="pin" type="password" inputmode="numeric" maxlength="4" pattern="\d{4}" class="pin" autocomplete="current-password" required>
+    </label>
+    <button class="btn">Log in</button>
+  </form>
+  <p class="hint">Need an account? <a href="{{ url_for('register') }}">Open one</a>.</p>
+</section>
+{% endblock %}
