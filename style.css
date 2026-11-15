@@ -25,9 +25,9 @@ h2{font-size:1.1rem;margin:0 0 .75rem}
 .actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem}
 .wide{overflow:hidden}
 label{display:grid;gap:.3rem;font-weight:600;font-size:.95rem}
-input{font:inherit;padding:.65rem .75rem;border:1px solid #8fa0a7;border-radius:4px;background:#fff;color:var(--ink);width:100%}
+input,select{font:inherit;padding:.65rem .75rem;border:1px solid #8fa0a7;border-radius:4px;background:#fff;color:var(--ink);width:100%}
 input.pin{font-family:"DM Mono",monospace;letter-spacing:.5em}
-input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .btn{font:inherit;font-weight:800;background:var(--ink);color:#fff;border:0;border-radius:4px;padding:.7rem 1rem;cursor:pointer}
 .btn:hover{background:#25414c}
 .btn.alt{background:var(--amber);color:var(--ink)}.btn.alt:hover{background:#ffb84d}

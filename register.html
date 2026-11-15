@@ -9,6 +9,15 @@
     <label>Full name
       <input name="name" maxlength="60" required>
     </label>
+    <label>Gender
+      <select name="gender" required>
+        <option value="" disabled selected>Select your gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+        <option value="Prefer not to say">Prefer not to say</option>
+      </select>
+    </label>
     <label>Choose a 4-digit PIN
       <input name="pin" type="password" inputmode="numeric" maxlength="4" pattern="\d{4}" class="pin" autocomplete="new-password" required>
     </label>

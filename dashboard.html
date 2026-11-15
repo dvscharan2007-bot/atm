@@ -6,6 +6,7 @@
   <p class="amount">{{ acct.balance|money }}</p>
   <dl>
     <div><dt>Account holder</dt><dd>{{ acct.name }}</dd></div>
+    <div><dt>Gender</dt><dd>{{ acct.gender }}</dd></div>
     <div><dt>Card number</dt><dd>{{ acct.card|card }}</dd></div>
     <div><dt>Withdrawal left today</dt><dd>{{ left|money }}</dd></div>
   </dl>

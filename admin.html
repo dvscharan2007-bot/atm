@@ -36,6 +36,7 @@
         <tr>
           <th>ID</th>
           <th>Name</th>
+          <th>Gender</th>
           <th>Card</th>
           <th class="num">Balance</th>
           <th>Status</th>
@@ -47,6 +48,7 @@
           <tr>
             <td>{{ acct.id }}</td>
             <td>{{ acct.name }}</td>
+            <td>{{ acct.gender }}</td>
             <td>{{ acct.card|card }}</td>
             <td class="num">{{ acct.balance|money }}</td>
             <td>{{ 'Blocked' if acct.frozen else 'Active' }}</td>
